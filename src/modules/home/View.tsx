@@ -2,8 +2,8 @@ import { CardActionArea } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { ReactComponent as PaperIcon } from './../../paper.svg';
-import { ReactComponent as SpeedometerIcon } from './../../speedometer.svg';
+import { ReactComponent as PaperIcon } from './../../shared/icons/paper.svg';
+import { ReactComponent as SpeedometerIcon } from './../../shared/icons/speedometer.svg';
 
 export function ActionAreaCard({
   margin,
