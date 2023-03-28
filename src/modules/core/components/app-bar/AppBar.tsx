@@ -5,8 +5,12 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import LeftNavigator from '../left-navigator/LeftNavigator';
+import { useState } from 'react';
 
 export default function ButtonAppBar() {
+  const [toggled, setToggled] = useState(false);
+
   return (
     <Box sx={{ flexGrow: 1, bgcolor: 'green' }}>
       <AppBar position="static">
@@ -19,9 +23,14 @@ export default function ButtonAppBar() {
               mr: 2,
               color: 'white',
             }}
+            onClick={() => setToggled(!toggled)}
           >
             <MenuIcon />
           </IconButton>
+          <LeftNavigator
+            setToggled={setToggled}
+            toggled={toggled}
+          ></LeftNavigator>
           <Typography
             variant="h6"
             component="div"

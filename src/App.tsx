@@ -1,7 +1,7 @@
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import React from 'react';
 import './App.css';
-import AppBar from './shared/components/app-bar/AppBar';
+import AppBar from './modules/core/components/app-bar/AppBar';
 
 const theme = createTheme({
   palette: {
