@@ -3,9 +3,11 @@ import { Button, Typography } from '@mui/material';
 import * as React from 'react';
 import AddCalendarModal from './components/add-calendar-modal/AddCalendarModal';
 import BasicTable from './components/calendars-table/CalendarsTable';
+import CalendarsData from '../../../src/dummy_data/all_calendars.json';
 
 export default function View() {
   const [modalOpen, setModalOpen] = React.useState(false);
+  const [calendars, setCalendars] = React.useState(CalendarsData);
 
   return (
     <div style={{ padding: '20px 200px' }}>
@@ -26,11 +28,16 @@ export default function View() {
         </Button>
       </div>
       <BasicTable
+        calendars={calendars}
         sx={{
           marginTop: 4,
         }}
       ></BasicTable>
       <AddCalendarModal
+        onOptimizeClick={(newCalendar: any) => {
+          setCalendars([...calendars, newCalendar]);
+          setModalOpen(false);
+        }}
         open={modalOpen}
         handleClose={() => setModalOpen(false)}
       ></AddCalendarModal>

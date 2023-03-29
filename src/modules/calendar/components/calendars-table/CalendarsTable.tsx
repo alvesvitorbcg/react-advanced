@@ -7,9 +7,14 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import CalendarsData from '../../../../dummy_data/all_calendars.json';
 
-export default function BasicTable({ sx }: { sx?: SxProps<Theme> }) {
+export default function BasicTable({
+  sx,
+  calendars,
+}: {
+  sx?: SxProps<Theme>;
+  calendars: any[];
+}) {
   return (
     <TableContainer component={Paper} sx={sx}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -22,7 +27,7 @@ export default function BasicTable({ sx }: { sx?: SxProps<Theme> }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {CalendarsData.map((row) => (
+          {calendars.map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
