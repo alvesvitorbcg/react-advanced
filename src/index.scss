@@ -13,7 +13,9 @@ $primary-green: #3ead92;
   display: flex;
   flex-direction: row;
 }
+
 .flex-row-space-between {
   @extend .flex-row;
   justify-content: space-between;
+  align-items: center;
 }
