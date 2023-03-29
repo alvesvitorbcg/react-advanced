@@ -5,14 +5,16 @@ import AnalysisView from './modules/analysis/View';
 import CalendarView from './modules/calendar/View';
 import AppBar from './modules/core/components/app-bar/AppBar';
 import HomeView from './modules/home/View';
+import style from './style.module.scss';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#71ad93',
+      main: style.primaryGreen,
     },
   },
 });
+
 function App() {
   return (
     <div className="App">

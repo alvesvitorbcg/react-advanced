@@ -7,3 +7,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+$primary-green: #3ead92;
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+.flex-row-space-between {
+  @extend .flex-row;
+  justify-content: space-between;
+}
