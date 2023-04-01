@@ -1,8 +1,42 @@
-import { MenuItem, Select } from '@mui/material';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from '@mui/material';
+import { useState } from 'react';
+import DetailedTableData from '../../dummy_data/detailed_table_data.json';
 import Tabs from './components/tabs/Tabs';
+import * as Service from './service';
 import './View.scss';
 
 export default function View() {
+  const detailedTableEnrichedWithProducts =
+    Service.getDetailedTableDataEnrichedWithProducts();
+
+  const allRetailersIds = Service.queryAllRetailerIds();
+  const retailersOptions = Service.removeDuplicates(allRetailersIds);
+
+  const categoriesIds = Service.queryAllCategoryIds();
+  const categoriesOptions = Service.removeDuplicates(categoriesIds);
+
+  const brandsNames = Service.queryAllBrandNames(
+    detailedTableEnrichedWithProducts
+  );
+  const brandsOptions = Service.removeDuplicates(brandsNames);
+
+  const productsNames = Service.queryAllProductNames(
+    detailedTableEnrichedWithProducts
+  );
+  const productsOptions = Service.removeDuplicates(productsNames);
+
+  const [categoryFilter, setCategoryFilter] = useState(categoriesOptions[0]);
+  const [retailerFilter, setRetailerFilter] = useState(retailersOptions[0]);
+  const [brandFilter, setBrandFilter] = useState(brandsOptions[0]);
+  const [productFilter, setProductFilter] = useState(productsOptions[0]);
+
   return (
     <div className="flex-column container" style={{ padding: '20px 50px' }}>
       <div
@@ -20,8 +54,7 @@ export default function View() {
           variant="standard"
           sx={{ alignSelf: 'flex-end' }}
         >
-          <MenuItem value={1}>MyCalendar2019</MenuItem>
-          <MenuItem value={2}>MyCalendar2020</MenuItem>
+          <MenuItem value={1}>{DetailedTableData.name}</MenuItem>
         </Select>
       </div>
       <div
@@ -31,53 +64,96 @@ export default function View() {
           justifyContent: 'space-between',
         }}
       >
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={1}
-          onChange={() => {}}
-          variant="standard"
-          sx={{ alignSelf: 'flex-end' }}
-        >
-          <MenuItem value={1}>MyCalendar2019</MenuItem>
-          <MenuItem value={2}>MyCalendar2020</MenuItem>
-        </Select>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={1}
-          onChange={() => {}}
-          variant="standard"
-          sx={{ alignSelf: 'flex-end' }}
-        >
-          <MenuItem value={1}>MyCalendar2019</MenuItem>
-          <MenuItem value={2}>MyCalendar2020</MenuItem>
-        </Select>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={1}
-          onChange={() => {}}
-          variant="standard"
-          sx={{ alignSelf: 'flex-end' }}
-        >
-          <MenuItem value={1}>MyCalendar2019</MenuItem>
-          <MenuItem value={2}>MyCalendar2020</MenuItem>
-        </Select>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={1}
-          onChange={() => {}}
-          variant="standard"
-          sx={{ alignSelf: 'flex-end' }}
-        >
-          <MenuItem value={1}>MyCalendar2019</MenuItem>
-          <MenuItem value={2}>MyCalendar2020</MenuItem>
-        </Select>
+        <FormControl sx={{ width: '200px' }}>
+          <InputLabel id="demo-simple-select-label">Retailer</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={retailerFilter}
+            label="Retailer"
+            onChange={(event) => {
+              setRetailerFilter(Number(event.target.value));
+            }}
+            variant="outlined"
+          >
+            {retailersOptions.map((option, index) => (
+              <MenuItem key={index} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{ width: '200px' }}>
+          <InputLabel id="demo-simple-select-label">Category</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={categoryFilter}
+            onChange={(event) => {
+              setCategoryFilter(event.target.value);
+            }}
+            variant="outlined"
+            placeholder="Category"
+            label="Category"
+          >
+            {categoriesOptions.map((option, index) => (
+              <MenuItem key={index} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{ width: '200px' }}>
+          <InputLabel id="demo-simple-select-label">Brand</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={brandFilter}
+            label="Brand"
+            onChange={(event) => {
+              setBrandFilter(event.target.value);
+            }}
+            variant="outlined"
+          >
+            {brandsOptions.map((option, index) => (
+              <MenuItem key={index} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{ width: '200px' }}>
+          <InputLabel id="demo-simple-select-label">Product</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={productFilter}
+            label="Product"
+            onChange={(event) => {
+              setProductFilter(event.target.value);
+            }}
+            variant="outlined"
+          >
+            {productsOptions.map((option, index) => (
+              <MenuItem key={index} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <Button variant="contained" sx={{ width: '200px' }}>
+          <Typography color="white">APPLY FILTERS</Typography>
+        </Button>
+        <Button variant="contained" sx={{ width: '200px' }}>
+          <Typography color="white">CLEAR FILTERS</Typography>
+        </Button>
       </div>
       <div className="container-section">
-        <Tabs></Tabs>
+        <Tabs detailedTableData={detailedTableEnrichedWithProducts}></Tabs>
       </div>
     </div>
   );

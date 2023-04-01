@@ -1,13 +1,13 @@
-import * as React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import { Paper } from '@mui/material';
-import EffectivenessTable from '../../components/effectiveness-table/EffectivenessTable';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
 import CampaignsData from '../../../../dummy_data/campaign_matrix.json';
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
-
+import EffectivenessTable from '../../components/effectiveness-table/EffectivenessTable';
+import IMergedDetailedTableWithProducts from '../../interfaces/IProductsMergedWithDetailedData';
+import DetailedDataTable from '../detailed-data-table/DetailedDataTable';
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -37,7 +37,11 @@ function a11yProps(index: number) {
   };
 }
 
-export default function CustomTabs() {
+export default function CustomTabs({
+  detailedTableData,
+}: {
+  detailedTableData: IMergedDetailedTableWithProducts;
+}) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -67,18 +71,12 @@ export default function CustomTabs() {
               marginTop: 4,
             }}
           ></EffectivenessTable>
-          <LineChart width={500} height={300} data={[{ name: 'A', age: 20 }]}>
-            <XAxis dataKey="name" />
-            <YAxis dataKey="age" />
-            <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-            <Line type="monotone" dataKey="age" stroke="#8884d8" />
-            <Line type="monotone" dataKey="name" stroke="#82ca9d" />
-          </LineChart>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Typography align="left" fontWeight="bold">
+          <Typography align="left" fontWeight="bold" marginBottom="24px">
             Metrics
           </Typography>
+          <DetailedDataTable data={detailedTableData}></DetailedDataTable>
         </TabPanel>
       </Box>
     </Paper>
