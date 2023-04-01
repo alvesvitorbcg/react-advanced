@@ -9,13 +9,18 @@ import {
 import { useState } from 'react';
 import DetailedTableData from '../../dummy_data/detailed_table_data.json';
 import Tabs from './components/tabs/Tabs';
+import IMergedDetailedTableWithProducts from './interfaces/IProductsMergedWithDetailedData';
 import * as Service from './service';
 import './View.scss';
 
 export default function View() {
   const detailedTableEnrichedWithProducts =
     Service.getDetailedTableDataEnrichedWithProducts();
-
+  const [filteredResults, setFilteredResults] = useState(
+    JSON.parse(
+      JSON.stringify(detailedTableEnrichedWithProducts)
+    ) as IMergedDetailedTableWithProducts
+  );
   const allRetailersIds = Service.queryAllRetailerIds();
   const retailersOptions = Service.removeDuplicates(allRetailersIds);
 
@@ -37,6 +42,25 @@ export default function View() {
   const [brandFilter, setBrandFilter] = useState(brandsOptions[0]);
   const [productFilter, setProductFilter] = useState(productsOptions[0]);
 
+  const handleApplyFilter = () => {
+    const filtered = {
+      ...detailedTableEnrichedWithProducts,
+      promo_events: detailedTableEnrichedWithProducts.promo_events.filter(
+        (x) => {
+          const product = detailedTableEnrichedWithProducts.product_kpis.find(
+            (kpi) => kpi.product_id === x.product_id
+          )?.product;
+          return (
+            x.retailer_id === retailerFilter &&
+            product?.category_name === categoryFilter &&
+            product?.product_brand === brandFilter &&
+            product?.product_name === productFilter
+          );
+        }
+      ),
+    };
+    setFilteredResults(filtered);
+  };
   return (
     <div className="flex-column container" style={{ padding: '20px 50px' }}>
       <div
@@ -145,15 +169,25 @@ export default function View() {
           </Select>
         </FormControl>
 
-        <Button variant="contained" sx={{ width: '200px' }}>
+        <Button
+          variant="contained"
+          sx={{ width: '200px' }}
+          onClick={handleApplyFilter}
+        >
           <Typography color="white">APPLY FILTERS</Typography>
         </Button>
-        <Button variant="contained" sx={{ width: '200px' }}>
-          <Typography color="white">CLEAR FILTERS</Typography>
+        <Button
+          variant="contained"
+          sx={{ width: '200px', backgroundColor: '#e0e0e0' }}
+          onClick={() => {
+            setFilteredResults(detailedTableEnrichedWithProducts);
+          }}
+        >
+          <Typography>CLEAR FILTERS</Typography>
         </Button>
       </div>
       <div className="container-section">
-        <Tabs detailedTableData={detailedTableEnrichedWithProducts}></Tabs>
+        <Tabs detailedTableData={filteredResults}></Tabs>
       </div>
     </div>
   );
