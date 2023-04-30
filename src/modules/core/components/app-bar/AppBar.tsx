@@ -1,3 +1,4 @@
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -40,13 +41,20 @@ export default function ButtonAppBar() {
           >
             AI Promo
           </Typography>
-          <Button
-            sx={{
-              color: 'white',
-            }}
-          >
-            USER
-          </Button>
+          <section className="flex-row-space-between">
+            <AccountCircleIcon
+              sx={{
+                color: 'white',
+              }}
+            ></AccountCircleIcon>
+            <Button
+              sx={{
+                color: 'white',
+              }}
+            >
+              USER
+            </Button>
+          </section>
         </Toolbar>
       </AppBar>
     </Box>
