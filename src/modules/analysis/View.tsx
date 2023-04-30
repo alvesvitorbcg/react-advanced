@@ -37,10 +37,10 @@ export default function View() {
   );
   const productsOptions = Service.removeDuplicates(productsNames);
 
-  const [categoryFilter, setCategoryFilter] = useState(null as any);
-  const [retailerFilter, setRetailerFilter] = useState(null as any);
-  const [brandFilter, setBrandFilter] = useState(null as any);
-  const [productFilter, setProductFilter] = useState(null as any);
+  const [categoryFilter, setCategoryFilter] = useState(categoriesOptions[0]);
+  const [retailerFilter, setRetailerFilter] = useState(retailersOptions[0]);
+  const [brandFilter, setBrandFilter] = useState(brandsOptions[0]);
+  const [productFilter, setProductFilter] = useState(productsOptions[0]);
 
   const handleApplyFilter = () => {
     const filtered = {
