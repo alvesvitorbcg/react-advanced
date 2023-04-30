@@ -5,12 +5,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import * as React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { ReactComponent as HouseGrayIcon } from './../../../../shared/icons/house-gray.svg';
-import { ReactComponent as HouseIcon } from './../../../../shared/icons/house.svg';
-import { ReactComponent as PaperGrayIcon } from './../../../../shared/icons/paper-gray.svg';
-import { ReactComponent as PaperIcon } from './../../../../shared/icons/paper.svg';
-import { ReactComponent as SpeedometerGrayIcon } from './../../../../shared/icons/speedometer-gray.svg';
-import { ReactComponent as SpeedometerIcon } from './../../../../shared/icons/speedometer.svg';
+import ModulesRoutes from '../ModulesRoutes';
 
 export default function LeftDrawer({
   toggled,
@@ -19,24 +14,6 @@ export default function LeftDrawer({
   toggled: boolean;
   setToggled: Function;
 }) {
-  const menuItems = [
-    {
-      label: 'Home',
-      url: '/',
-      icons: [HouseGrayIcon, HouseIcon],
-    },
-    {
-      label: 'Calendar',
-      url: '/calendar',
-      icons: [PaperGrayIcon, PaperIcon],
-    },
-    {
-      label: 'Analysis',
-      url: '/analysis',
-
-      icons: [SpeedometerGrayIcon, SpeedometerIcon],
-    },
-  ];
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       setToggled(open);
@@ -49,7 +26,7 @@ export default function LeftDrawer({
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {menuItems.map((menuItem, index) => {
+        {ModulesRoutes.map((menuItem, index) => {
           const iconIndex = location.pathname === menuItem.url ? 1 : 0;
           const Icon = menuItem.icons[iconIndex];
 
