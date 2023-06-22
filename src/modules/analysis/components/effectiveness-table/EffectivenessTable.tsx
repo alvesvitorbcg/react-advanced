@@ -5,22 +5,14 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import ICampaignData from '../../interfaces/ICampaignData';
 
-interface IData {
-  classification_name: string;
-  number_of_offers: number;
-  total_incremental_sales: string;
-  total_incremental_margin: string;
-  classification: string;
-}
-
-const colors = ['#c31653', '#d7df3c', '#7ca893', '#54775c'];
 export default function EffectivenessTable({
   sx,
   campaigns,
 }: {
   sx?: SxProps<Theme>;
-  campaigns: IData[];
+  campaigns: ICampaignData[];
 }) {
   return (
     <TableContainer sx={sx}>
@@ -52,7 +44,7 @@ export default function EffectivenessTable({
                   style={{
                     height: 20,
                     width: 20,
-                    backgroundColor: colors[index],
+                    backgroundColor: row.color,
                     marginRight: '8px',
                   }}
                 ></div>

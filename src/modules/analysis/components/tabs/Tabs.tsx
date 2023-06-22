@@ -8,6 +8,7 @@ import CampaignsData from '../../../../dummy_data/campaign_matrix.json';
 import EffectivenessTable from '../../components/effectiveness-table/EffectivenessTable';
 import IMergedDetailedTableWithProducts from '../../interfaces/IProductsMergedWithDetailedData';
 import DetailedDataTable from '../detailed-data-table/DetailedDataTable';
+import EffectivenessGraph from '../effectiveness-table/effectiveness-graph/EffectivenessGraph';
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -42,8 +43,12 @@ export default function CustomTabs({
 }: {
   detailedTableData: IMergedDetailedTableWithProducts;
 }) {
+  const colors = ['#c31653', '#d7df3c', '#7ca893', '#54775c'];
   const [value, setValue] = React.useState(0);
-
+  const campaigns = CampaignsData.map((c, index) => ({
+    ...c,
+    color: colors[index],
+  }));
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -66,11 +71,12 @@ export default function CustomTabs({
             Campaign Effectiveness Matrix
           </Typography>
           <EffectivenessTable
-            campaigns={CampaignsData}
+            campaigns={campaigns}
             sx={{
               marginTop: 4,
             }}
           ></EffectivenessTable>
+          <EffectivenessGraph campaigns={campaigns}></EffectivenessGraph>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Typography align="left" fontWeight="bold" marginBottom="24px">
