@@ -72,4 +72,4 @@ def read_json_file(file_name:str):
 
 
 if __name__ == '__main__':
-    app.run(debug= True)
+    app.run(debug= True,port=5002)

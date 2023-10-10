@@ -4,11 +4,19 @@ import * as React from 'react';
 import AddCalendarModal from './components/add-calendar-modal/AddCalendarModal';
 import BasicTable from './components/calendars-table/CalendarsTable';
 import CalendarsData from '../../../src/dummy_data/all_calendars.json';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchData } from './redux/actions/http-actions';
 
 export default function View() {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [calendars, setCalendars] = React.useState(CalendarsData);
+  const dispatch = useDispatch();
+  const { data, loading, error } = useSelector((state: any) => state.http);
 
+  React.useEffect(() => {
+    console.log('useEffect');
+    dispatch(fetchData());
+  }, [dispatch]);
   return (
     <div style={{ padding: '20px 200px' }}>
       <div className="flex-row-space-between">

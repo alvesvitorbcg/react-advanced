@@ -8,6 +8,8 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import store from './modules/calendar/redux/store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,7 +17,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );
