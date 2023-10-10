@@ -2,6 +2,7 @@ import os
 from flask import Flask, jsonify,request, make_response,abort
 import config
 import json
+from flask_cors import CORS
 
 app= Flask(__name__)
 
@@ -70,6 +71,7 @@ def read_json_file(file_name:str):
         json_data = json.loads(json_file.read())
     return json_data
 
+CORS(app)
 
 if __name__ == '__main__':
     app.run(debug= True,port=5002)

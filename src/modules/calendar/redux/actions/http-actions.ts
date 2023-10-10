@@ -12,7 +12,14 @@ export const fetchData = () => {
     dispatch({ type: FETCH_DATA_REQUEST });
 
     try {
-      const response = await axios.get('https://api.example.com/data');
+      const response = await axios.get(
+        'http://localhost:5002/api/v1/reference-calendars',
+        {
+          headers: {
+            Authorization: `Bearer {token}`,
+          },
+        }
+      );
       dispatch({ type: FETCH_DATA_SUCCESS, payload: response.data });
     } catch (error: any) {
       dispatch({ type: FETCH_DATA_FAILURE, payload: error.message });
