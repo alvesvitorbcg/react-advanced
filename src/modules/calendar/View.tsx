@@ -7,9 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from './redux/actions/http-actions';
 import ICalendar from './interfaces/ICalendar';
 
-export default function View() {
-  const [modalOpen, setModalOpen] = React.useState(false);
-  const [calendars, setCalendars] = React.useState(new Array<ICalendar>());
+const useCalendarData = () => {
   const dispatch = useDispatch();
   const { data } = useSelector((state: any) => state.calendar);
 
@@ -17,9 +15,20 @@ export default function View() {
     dispatch(fetchData() as any);
   }, [dispatch]);
 
+  const calendars = React.useMemo(() => {
+    if (data) return data as ICalendar[];
+  }, [data]);
+
+  return calendars;
+};
+
+export default function View() {
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [calendars, setCalendars] = React.useState(new Array<ICalendar>());
+  const data = useCalendarData();
+
   React.useEffect(() => {
     console.log('Calendar view calendars', data);
-
     if (data) {
       setCalendars(data);
     }
