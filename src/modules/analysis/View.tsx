@@ -20,7 +20,9 @@ export default function View() {
   const dispatch = useDispatch();
   const [categoryFilter, setCategoryFilter] = useState('');
 
-  const { data, loading, error } = useSelector((state: any) => state.analysis);
+  const { data, loading, error } = useSelector(
+    (state: any) => state.analysis.products
+  );
 
   React.useEffect(() => {
     dispatch(fetchProductsData() as any);
@@ -94,11 +96,13 @@ export default function View() {
       setCategoryFilter(categoriesOptions[0]);
     }
   }, [categoriesOptions]);
+
   React.useEffect(() => {
     if (brandsOptions) {
       setBrandFilter(brandsOptions[0]);
     }
   }, [brandsOptions]);
+
   React.useEffect(() => {
     if (productsOptions) {
       setProductFilter(productsOptions[0]);
