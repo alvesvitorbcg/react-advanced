@@ -6,22 +6,22 @@ import { ReactComponent as SpeedometerGrayIcon } from './../../../shared/icons/s
 import { ReactComponent as SpeedometerIcon } from './../../../shared/icons/speedometer.svg';
 
 const ModulesRoutes = [
-    {
-      label: 'Home',
-      url: '/',
-      icons: [HouseGrayIcon, HouseIcon],
-    },
-    {
-      label: 'Calendar',
-      url: '/calendar',
-      icons: [PaperGrayIcon, PaperIcon],
-    },
-    {
-      label: 'Analysis',
-      url: '/analysis',
+  {
+    label: 'Home',
+    url: '/',
+    icons: [HouseGrayIcon, HouseIcon],
+  },
+  {
+    label: 'Calendar',
+    url: '/calendar',
+    icons: [PaperGrayIcon, PaperIcon],
+  },
+  {
+    label: 'Analysis',
+    url: '/analysis',
 
-      icons: [SpeedometerGrayIcon, SpeedometerIcon],
-    },
+    icons: [SpeedometerGrayIcon, SpeedometerIcon],
+  },
 ];
-  
- export default ModulesRoutes
+
+export default ModulesRoutes;
