@@ -41,31 +41,39 @@ function a11yProps(index: number) {
   };
 }
 const colors = ['#c31653', '#d7df3c', '#7ca893', '#54775c'];
+const useCampaignMatrixData = () => {
+  const dispatch = useDispatch();
+  const { data } = useSelector((state: any) => state.analysis.campaignMatrix);
+
+  React.useEffect(() => {
+    dispatch(fetchCampaignMatrixData() as any);
+  }, [dispatch]);
+
+  const campaignMatrixData = React.useMemo(() => {
+    if (data) return data as ICampaignData[];
+  }, [data]);
+
+  return campaignMatrixData;
+};
 
 export default function CustomTabs({
   detailedTableData,
 }: {
   detailedTableData: IMergedDetailedTableWithProducts;
 }) {
-  const dispatch = useDispatch();
-  const { data } = useSelector((state: any) => state.analysis.campaignMatrix);
-  const CampaignsData = data as ICampaignData[];
-
-  React.useEffect(() => {
-    dispatch(fetchCampaignMatrixData() as any);
-  }, [dispatch]);
+  const campaignsData = useCampaignMatrixData();
 
   const [value, setValue] = React.useState(0);
   const campaigns = React.useMemo(() => {
-    if (CampaignsData) {
-      console.log('Campaigns data', CampaignsData);
+    if (campaignsData) {
+      console.log('Campaigns data', campaignsData);
 
-      return CampaignsData.map((c, index) => ({
+      return campaignsData.map((c, index) => ({
         ...c,
         color: colors[index],
       }));
     }
-  }, [CampaignsData]);
+  }, [campaignsData]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
