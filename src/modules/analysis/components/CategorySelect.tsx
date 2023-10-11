@@ -25,30 +25,32 @@ export function CategorySelect({
   }, [categoriesOptions, setCategoryFilter]);
 
   return (
-    <FormControl
-      sx={{
-        width: '200px',
-      }}
-    >
-      <InputLabel id="demo-simple-select-label">Category</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={categoryFilter}
-        onChange={(event) => {
-          setCategoryFilter(event.target.value as any);
+    categoryFilter && (
+      <FormControl
+        sx={{
+          width: '200px',
         }}
-        variant="outlined"
-        placeholder="Category"
-        label="Category"
       >
-        {categoriesOptions &&
-          categoriesOptions.map((option, index) => (
-            <MenuItem key={index} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-      </Select>
-    </FormControl>
+        <InputLabel id="demo-simple-select-label">Category</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={categoryFilter}
+          onChange={(event) => {
+            setCategoryFilter(event.target.value as any);
+          }}
+          variant="outlined"
+          placeholder="Category"
+          label="Category"
+        >
+          {categoriesOptions &&
+            categoriesOptions.map((option, index) => (
+              <MenuItem key={index} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
+    )
   );
 }

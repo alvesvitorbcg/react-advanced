@@ -29,29 +29,31 @@ export function BrandSelect({
   }, [brandsOptions, setBrandFilter]);
 
   return (
-    <FormControl
-      sx={{
-        width: '200px',
-      }}
-    >
-      <InputLabel id="demo-simple-select-label">Brand</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={brandFilter}
-        label="Brand"
-        onChange={(event) => {
-          setBrandFilter(event.target.value);
+    brandFilter && (
+      <FormControl
+        sx={{
+          width: '200px',
         }}
-        variant="outlined"
       >
-        {brandsOptions &&
-          brandsOptions.map((option, index) => (
-            <MenuItem key={index} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-      </Select>
-    </FormControl>
+        <InputLabel id="demo-simple-select-label">Brand</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={brandFilter}
+          label="Brand"
+          onChange={(event) => {
+            setBrandFilter(event.target.value);
+          }}
+          variant="outlined"
+        >
+          {brandsOptions &&
+            brandsOptions.map((option, index) => (
+              <MenuItem key={index} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
+    )
   );
 }

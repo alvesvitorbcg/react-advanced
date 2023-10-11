@@ -24,7 +24,7 @@ export function RetailerSelect({
       setRetailerFilter(retailersOptions[0]);
     }
   }, [retailersOptions, setRetailerFilter]);
-
+  if (retailerFilter == null) return null;
   return (
     <FormControl
       sx={{

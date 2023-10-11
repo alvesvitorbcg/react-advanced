@@ -6,38 +6,34 @@ export function CalendarSelect({
   calendarFilter,
   setCalendarFilter,
 }: {
-  calendarFilter: any;
+  calendarFilter: string | null;
   setCalendarFilter: Function;
 }) {
-  const allCalendars = useCalendarData();
-
+  const calendarData = useCalendarData();
   React.useEffect(() => {
-    if (allCalendars) {
-      setCalendarFilter(allCalendars[0].id);
+    if (calendarData) {
+      setCalendarFilter(calendarData[0].id.toString());
     }
-  }, [allCalendars, setCalendarFilter]);
-
+  }, [calendarData, setCalendarFilter]);
+  if (!calendarFilter || !calendarData) return null;
   return (
-    calendarFilter && (
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={calendarFilter}
-        onChange={(value) => {
-          setCalendarFilter(value.target.value as any);
-        }}
-        variant="standard"
-        sx={{
-          alignSelf: 'flex-end',
-        }}
-      >
-        {allCalendars &&
-          allCalendars.map((calendar) => (
-            <MenuItem key={calendar.id} value={calendar.id}>
-              {calendar.name}
-            </MenuItem>
-          ))}
-      </Select>
-    )
+    <Select
+      labelId="demo-simple-select-label"
+      id="demo-simple-select"
+      value={calendarFilter}
+      onChange={(event) => {
+        setCalendarFilter(event.target.value as any);
+      }}
+      variant="standard"
+      sx={{
+        alignSelf: 'flex-end',
+      }}
+    >
+      {calendarData.map((calendar) => (
+        <MenuItem key={calendar.id} value={calendar.id}>
+          {calendar.name}
+        </MenuItem>
+      ))}
+    </Select>
   );
 }

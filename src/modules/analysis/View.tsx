@@ -1,4 +1,4 @@
-import { Button, MenuItem, Select, Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import './View.scss';
 import { BrandSelect } from './components/BrandSelect';
@@ -8,26 +8,24 @@ import { RetailerSelect } from './components/RetailerSelect';
 import Tabs from './components/tabs/Tabs';
 import { useDetailedTableEnrichedWithProductData } from './hooks/useDetailedTableEnrichedWithProductData';
 import IMergedDetailedTableWithProducts from './interfaces/IProductsMergedWithDetailedData';
+import { CalendarSelect } from './CalendarSelect';
 
 export default function View() {
-  const [categoryFilter, setCategoryFilter] = useState('');
-  const [brandFilter, setBrandFilter] = useState('');
-  const [productFilter, setProductFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState(null as null | string);
+  const [brandFilter, setBrandFilter] = useState(null as null | string);
+  const [productFilter, setProductFilter] = useState(null as null | string);
   const [retailerFilter, setRetailerFilter] = useState(null as null | number);
   const [filteredResults, setFilteredResults] = useState(
     null as IMergedDetailedTableWithProducts | null
   );
+  const [calendarFilter, setCalendarFilter] = useState(null as string | null);
 
   const detailedTableEnrichedWithProducts =
     useDetailedTableEnrichedWithProductData();
 
   React.useEffect(() => {
     if (detailedTableEnrichedWithProducts) {
-      setFilteredResults(
-        JSON.parse(
-          JSON.stringify(detailedTableEnrichedWithProducts)
-        ) as IMergedDetailedTableWithProducts
-      );
+      setFilteredResults(structuredClone(detailedTableEnrichedWithProducts));
     }
   }, [detailedTableEnrichedWithProducts]);
 
@@ -61,20 +59,10 @@ export default function View() {
           justifyContent: 'flex-end',
         }}
       >
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={1}
-          onChange={() => {}}
-          variant="standard"
-          sx={{ alignSelf: 'flex-end' }}
-        >
-          {detailedTableEnrichedWithProducts && (
-            <MenuItem value={1}>
-              {detailedTableEnrichedWithProducts.name}
-            </MenuItem>
-          )}
-        </Select>
+        <CalendarSelect
+          calendarFilter={calendarFilter}
+          setCalendarFilter={setCalendarFilter}
+        ></CalendarSelect>
       </div>
       <div
         className="container-section"

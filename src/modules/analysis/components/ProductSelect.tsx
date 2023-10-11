@@ -30,29 +30,31 @@ export function ProductSelect({
   }, [productsOptions, setProductFilter]);
 
   return (
-    <FormControl
-      sx={{
-        width: '200px',
-      }}
-    >
-      <InputLabel id="demo-simple-select-label">Product</InputLabel>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={productFilter}
-        label="Product"
-        onChange={(event) => {
-          setProductFilter(event.target.value);
+    productFilter && (
+      <FormControl
+        sx={{
+          width: '200px',
         }}
-        variant="outlined"
       >
-        {productsOptions &&
-          productsOptions.map((option, index) => (
-            <MenuItem key={index} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-      </Select>
-    </FormControl>
+        <InputLabel id="demo-simple-select-label">Product</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={productFilter}
+          label="Product"
+          onChange={(event) => {
+            setProductFilter(event.target.value);
+          }}
+          variant="outlined"
+        >
+          {productsOptions &&
+            productsOptions.map((option, index) => (
+              <MenuItem key={index} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
+    )
   );
 }
