@@ -15,9 +15,7 @@ import Modal from '@mui/material/Modal';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import moment from 'moment';
 import { useState } from 'react';
-import CalendarsData from '../../../../dummy_data/all_calendars.json';
 import './AddCalendarModal.scss';
 
 const style = {
@@ -43,14 +41,7 @@ export default function BasicModal({
 }) {
   const [nameValue, setNameValue] = useState('');
   const addNew = () => {
-    const id = CalendarsData.sort((a, b) => (a.id < b.id ? 1 : -1))[0].id + 1;
-    const newCalendar = {
-      id,
-      name: nameValue,
-      last_edited: moment().format('HH:mm DD/MM/yyyy'),
-      status: 'In Progress',
-    };
-    onOptimizeClick(newCalendar);
+    console.log('add new');
   };
 
   return (

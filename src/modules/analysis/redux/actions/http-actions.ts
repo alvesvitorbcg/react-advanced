@@ -17,7 +17,7 @@ export const fetchData = () => {
     dispatch({ type: FETCH_DATA_REQUEST });
 
     try {
-      const response = await axios.get(`${API_BASE_URL}/calendars`, {
+      const response = await axios.get(`${API_BASE_URL}/products`, {
         headers,
       });
       dispatch({ type: FETCH_DATA_SUCCESS, payload: response.data });

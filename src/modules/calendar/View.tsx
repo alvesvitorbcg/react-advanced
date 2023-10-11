@@ -5,12 +5,11 @@ import AddCalendarModal from './components/add-calendar-modal/AddCalendarModal';
 import BasicTable from './components/calendars-table/CalendarsTable';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from './redux/actions/http-actions';
-import IReferenceCalendar from './interfaces/IReferenceCalendar';
+import ICalendar from './interfaces/ICalendar';
+
 export default function View() {
   const [modalOpen, setModalOpen] = React.useState(false);
-  const [calendars, setCalendars] = React.useState(
-    new Array<IReferenceCalendar>()
-  );
+  const [calendars, setCalendars] = React.useState(new Array<ICalendar>());
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state: any) => state.http);
 
@@ -31,7 +30,6 @@ export default function View() {
   if (error) {
     return <div>Error: {error}</div>;
   }
-  console.log('data', data);
 
   return (
     <div style={{ padding: '20px 200px' }}>

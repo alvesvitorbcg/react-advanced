@@ -1,4 +1,4 @@
-export default interface IReferenceCalendar {
+export default interface ICalendar {
   id: number;
   last_edited: string;
   name: string;
