@@ -40,6 +40,7 @@ function a11yProps(index: number) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
+const colors = ['#c31653', '#d7df3c', '#7ca893', '#54775c'];
 
 export default function CustomTabs({
   detailedTableData,
@@ -56,16 +57,18 @@ export default function CustomTabs({
     dispatch(fetchCampaignMatrixData() as any);
   }, [dispatch]);
 
-  React.useEffect(() => {
-    if (CampaignsData) console.log('Campaigns data', CampaignsData);
+  const [value, setValue] = React.useState(0);
+  const campaigns = React.useMemo(() => {
+    if (CampaignsData) {
+      console.log('Campaigns data', CampaignsData);
+
+      return CampaignsData.map((c, index) => ({
+        ...c,
+        color: colors[index],
+      }));
+    }
   }, [CampaignsData]);
 
-  const colors = ['#c31653', '#d7df3c', '#7ca893', '#54775c'];
-  const [value, setValue] = React.useState(0);
-  const campaigns = CampaignsData.map((c, index) => ({
-    ...c,
-    color: colors[index],
-  }));
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -87,13 +90,17 @@ export default function CustomTabs({
           <Typography align="left" fontWeight="bold">
             Campaign Effectiveness Matrix
           </Typography>
-          <EffectivenessTable
-            campaigns={campaigns}
-            sx={{
-              marginTop: 4,
-            }}
-          ></EffectivenessTable>
-          <EffectivenessGraph campaigns={campaigns}></EffectivenessGraph>
+          {campaigns && (
+            <EffectivenessTable
+              campaigns={campaigns}
+              sx={{
+                marginTop: 4,
+              }}
+            ></EffectivenessTable>
+          )}
+          {campaigns && (
+            <EffectivenessGraph campaigns={campaigns}></EffectivenessGraph>
+          )}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Typography align="left" fontWeight="bold" marginBottom="24px">

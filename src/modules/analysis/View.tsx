@@ -7,13 +7,15 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
-import DetailedTableData from '../../dummy_data/detailed_table_data.json';
 import Tabs from './components/tabs/Tabs';
 import IMergedDetailedTableWithProducts from './interfaces/IProductsMergedWithDetailedData';
 import * as Service from './service';
 import './View.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProductsData } from './redux/actions/http-actions';
+import {
+  fetchDetailedTableData,
+  fetchProductsData,
+} from './redux/actions/http-actions';
 import { IProductsResponse } from './interfaces/IProduct';
 
 export default function View() {
@@ -23,21 +25,37 @@ export default function View() {
   const { data, loading, error } = useSelector(
     (state: any) => state.analysis.products
   );
+  const { data: data2 } = useSelector(
+    (state: any) => state.analysis.detailedTable
+  );
+
+  const DetailedTableData = React.useMemo(() => {
+    if (data2) return data2 as IMergedDetailedTableWithProducts;
+  }, [data2]);
 
   React.useEffect(() => {
     dispatch(fetchProductsData() as any);
   }, [dispatch]);
 
+  React.useEffect(() => {
+    dispatch(fetchDetailedTableData() as any);
+  }, [dispatch]);
+
   const products = React.useMemo(() => {
     if (data) return data as IProductsResponse;
   }, [data]);
+
   React.useEffect(() => {
     console.log('Analysis View products', products);
   }, [products]);
+
   const detailedTableEnrichedWithProducts = React.useMemo(() => {
-    if (products)
-      return Service.getDetailedTableDataEnrichedWithProducts(products);
-  }, [products]);
+    if (products && DetailedTableData)
+      return Service.getDetailedTableDataEnrichedWithProducts(
+        products,
+        DetailedTableData
+      );
+  }, [products, DetailedTableData]);
 
   const [filteredResults, setFilteredResults] = useState(
     null as IMergedDetailedTableWithProducts | null
@@ -53,13 +71,13 @@ export default function View() {
     }
   }, [detailedTableEnrichedWithProducts]);
 
-  const allRetailersIds = Service.queryAllRetailerIds();
-  const retailersOptions = Service.removeDuplicates(allRetailersIds);
+  const retailersOptions = React.useMemo(() => {
+    if (DetailedTableData) {
+      const retailersIds = Service.queryAllRetailerIds(DetailedTableData);
+      return Service.removeDuplicates(retailersIds);
+    }
+  }, [DetailedTableData]);
 
-  // const retailersOptions = React.useMemo(() => {
-  //     const retailersIds = Service.queryAllRetailerIds();
-  //     return Service.removeDuplicates(retailersIds);
-  // }, [products]);
   const categoriesOptions = React.useMemo(() => {
     if (products) {
       const categoriesIds = Service.queryAllCategoryIds(products);
@@ -69,7 +87,6 @@ export default function View() {
 
   const brandsOptions = React.useMemo(() => {
     if (detailedTableEnrichedWithProducts) {
-      // debugger;
       const brandsNames = Service.queryAllBrandNames(
         detailedTableEnrichedWithProducts
       );
@@ -87,7 +104,6 @@ export default function View() {
     }
   }, [detailedTableEnrichedWithProducts]);
 
-  const [retailerFilter, setRetailerFilter] = useState(retailersOptions[0]);
   const [brandFilter, setBrandFilter] = useState('');
   const [productFilter, setProductFilter] = useState('');
 
@@ -108,6 +124,15 @@ export default function View() {
       setProductFilter(productsOptions[0]);
     }
   }, [productsOptions]);
+
+  React.useEffect(() => {
+    if (retailersOptions) {
+      console.log('retailersOptions', retailersOptions);
+      setRetailerFilter(retailersOptions[0]);
+    }
+  }, [retailersOptions]);
+
+  const [retailerFilter, setRetailerFilter] = useState(null as null | number);
 
   const handleApplyFilter = () => {
     if (!detailedTableEnrichedWithProducts) return;
@@ -154,7 +179,9 @@ export default function View() {
           variant="standard"
           sx={{ alignSelf: 'flex-end' }}
         >
-          <MenuItem value={1}>{DetailedTableData.name}</MenuItem>
+          {DetailedTableData && (
+            <MenuItem value={1}>{DetailedTableData.name}</MenuItem>
+          )}
         </Select>
       </div>
       <div
@@ -176,11 +203,12 @@ export default function View() {
             }}
             variant="outlined"
           >
-            {retailersOptions.map((option, index) => (
-              <MenuItem key={index} value={option}>
-                {option}
-              </MenuItem>
-            ))}
+            {retailersOptions &&
+              retailersOptions.map((option, index) => (
+                <MenuItem key={index} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
 

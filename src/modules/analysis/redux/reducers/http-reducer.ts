@@ -8,6 +8,9 @@ import {
   FETCH_CAMPAIGN_MATRIX_REQUEST,
   FETCH_CAMPAIGN_MATRIX_SUCCESS,
   FETCH_CAMPAIGN_MATRIX_FAILURE,
+  FETCH_DETAILED_TABLE_REQUEST,
+  FETCH_DETAILED_TABLE_SUCCESS,
+  FETCH_DETAILED_TABLE_FAILURE,
 } from '../types';
 
 interface HttpState {
@@ -23,11 +26,13 @@ const INITIAL_HTTP_STATE: HttpState = {
 interface IState {
   products: HttpState;
   campaignMatrix: HttpState;
+  detailedTable: HttpState;
 }
 
 const initialState: IState = {
   products: INITIAL_HTTP_STATE,
   campaignMatrix: INITIAL_HTTP_STATE,
+  detailedTable: INITIAL_HTTP_STATE,
 };
 
 const updateStateKey = (
@@ -60,6 +65,7 @@ const httpReducer = (state = initialState, action: any) => {
         key: 'products',
         updatedProperties: { loading: false, error: action.payload },
       });
+
     case FETCH_CAMPAIGN_MATRIX_REQUEST:
       return updateStateKey(state, {
         key: 'campaignMatrix',
@@ -73,6 +79,22 @@ const httpReducer = (state = initialState, action: any) => {
     case FETCH_CAMPAIGN_MATRIX_FAILURE:
       return updateStateKey(state, {
         key: 'campaignMatrix',
+        updatedProperties: { loading: false, error: action.payload },
+      });
+
+    case FETCH_DETAILED_TABLE_REQUEST:
+      return updateStateKey(state, {
+        key: 'detailedTable',
+        updatedProperties: { loading: true, error: null },
+      });
+    case FETCH_DETAILED_TABLE_SUCCESS:
+      return updateStateKey(state, {
+        key: 'detailedTable',
+        updatedProperties: { loading: false, data: action.payload },
+      });
+    case FETCH_DETAILED_TABLE_FAILURE:
+      return updateStateKey(state, {
+        key: 'detailedTable',
         updatedProperties: { loading: false, error: action.payload },
       });
 
