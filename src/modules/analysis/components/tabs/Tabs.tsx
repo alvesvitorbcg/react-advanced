@@ -48,9 +48,7 @@ export default function CustomTabs({
   detailedTableData: IMergedDetailedTableWithProducts;
 }) {
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector(
-    (state: any) => state.analysis.campaignMatrix
-  );
+  const { data } = useSelector((state: any) => state.analysis.campaignMatrix);
   const CampaignsData = data as ICampaignData[];
 
   React.useEffect(() => {

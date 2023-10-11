@@ -18,44 +18,52 @@ import {
 } from './redux/actions/http-actions';
 import { IProductsResponse } from './interfaces/IProduct';
 
-export default function View() {
+const useDetailedData = () => {
   const dispatch = useDispatch();
-  const [categoryFilter, setCategoryFilter] = useState('');
-
-  const { data, loading, error } = useSelector(
-    (state: any) => state.analysis.products
-  );
-  const { data: data2 } = useSelector(
-    (state: any) => state.analysis.detailedTable
-  );
-
-  const DetailedTableData = React.useMemo(() => {
-    if (data2) return data2 as IMergedDetailedTableWithProducts;
-  }, [data2]);
-
-  React.useEffect(() => {
-    dispatch(fetchProductsData() as any);
-  }, [dispatch]);
+  const { data } = useSelector((state: any) => state.analysis.detailedTable);
 
   React.useEffect(() => {
     dispatch(fetchDetailedTableData() as any);
+  }, [dispatch]);
+
+  const detailedTable = React.useMemo(() => {
+    if (data) return data as IMergedDetailedTableWithProducts;
+  }, [data]);
+
+  return detailedTable;
+};
+
+const useProductsData = () => {
+  const dispatch = useDispatch();
+  const { data } = useSelector((state: any) => state.analysis.products);
+
+  React.useEffect(() => {
+    dispatch(fetchProductsData() as any);
   }, [dispatch]);
 
   const products = React.useMemo(() => {
     if (data) return data as IProductsResponse;
   }, [data]);
 
+  return products;
+};
+
+export default function View() {
+  const [categoryFilter, setCategoryFilter] = useState(null);
+  const detailedTable = useDetailedData();
+  const products = useProductsData();
+
   React.useEffect(() => {
     console.log('Analysis View products', products);
   }, [products]);
 
   const detailedTableEnrichedWithProducts = React.useMemo(() => {
-    if (products && DetailedTableData)
+    if (products && detailedTable)
       return Service.getDetailedTableDataEnrichedWithProducts(
         products,
-        DetailedTableData
+        detailedTable
       );
-  }, [products, DetailedTableData]);
+  }, [products, detailedTable]);
 
   const [filteredResults, setFilteredResults] = useState(
     null as IMergedDetailedTableWithProducts | null
@@ -72,11 +80,11 @@ export default function View() {
   }, [detailedTableEnrichedWithProducts]);
 
   const retailersOptions = React.useMemo(() => {
-    if (DetailedTableData) {
-      const retailersIds = Service.queryAllRetailerIds(DetailedTableData);
+    if (detailedTable) {
+      const retailersIds = Service.queryAllRetailerIds(detailedTable);
       return Service.removeDuplicates(retailersIds);
     }
-  }, [DetailedTableData]);
+  }, [detailedTable]);
 
   const categoriesOptions = React.useMemo(() => {
     if (products) {
@@ -155,13 +163,6 @@ export default function View() {
     setFilteredResults(filtered);
   };
 
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>There was an error</div>;
-  // }
   return (
     <div className="flex-column container" style={{ padding: '20px 50px' }}>
       <div
@@ -179,9 +180,7 @@ export default function View() {
           variant="standard"
           sx={{ alignSelf: 'flex-end' }}
         >
-          {DetailedTableData && (
-            <MenuItem value={1}>{DetailedTableData.name}</MenuItem>
-          )}
+          {detailedTable && <MenuItem value={1}>{detailedTable.name}</MenuItem>}
         </Select>
       </div>
       <div
@@ -219,7 +218,7 @@ export default function View() {
             id="demo-simple-select"
             value={categoryFilter}
             onChange={(event) => {
-              setCategoryFilter(event.target.value);
+              setCategoryFilter(event.target.value as any);
             }}
             variant="outlined"
             placeholder="Category"

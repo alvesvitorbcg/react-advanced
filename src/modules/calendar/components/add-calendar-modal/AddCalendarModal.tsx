@@ -33,13 +33,13 @@ const style = {
 export default function BasicModal({
   open,
   handleClose,
-  onOptimizeClick,
 }: {
   open: boolean;
   handleClose: Function;
   onOptimizeClick: Function;
 }) {
   const [nameValue, setNameValue] = useState('');
+
   const addNew = () => {
     console.log('add new');
   };
