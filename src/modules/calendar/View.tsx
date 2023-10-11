@@ -11,13 +11,15 @@ export default function View() {
   const [modalOpen, setModalOpen] = React.useState(false);
   const [calendars, setCalendars] = React.useState(new Array<ICalendar>());
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((state: any) => state.http);
+  const { data, loading, error } = useSelector((state: any) => state.calendar);
 
   React.useEffect(() => {
     dispatch(fetchData() as any);
   }, [dispatch]);
 
   React.useEffect(() => {
+    console.log('Calendar view calendars', data);
+
     if (data) {
       setCalendars(data);
     }

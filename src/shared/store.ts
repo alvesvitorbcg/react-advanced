@@ -2,10 +2,12 @@
 
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import httpReducer from './reducers/http-reducer';
+import { httpReducer as analysisReducer } from '../modules/analysis/redux/reducers/http-reducer';
+import { httpReducer as calendarReducer } from '../modules/calendar/redux/reducers/http-reducer';
 
 const rootReducer = combineReducers({
-  http: httpReducer,
+  analysis: analysisReducer,
+  calendar: calendarReducer,
 });
 
 const store = createStore(rootReducer, {}, applyMiddleware(thunk));

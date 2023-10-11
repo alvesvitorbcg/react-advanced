@@ -9,8 +9,7 @@ import App from './App';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
-import store from './modules/calendar/redux/store';
-import { store as AnalysisStore } from './modules/analysis/redux';
+import store from './shared/store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -19,10 +18,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <Provider store={AnalysisStore}>
-          <App />
-        </Provider>
+        <App />
       </Provider>
+      {/* </Provider> */}
     </BrowserRouter>
   </React.StrictMode>
 );

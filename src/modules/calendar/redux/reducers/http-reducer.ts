@@ -31,4 +31,4 @@ const httpReducer = (state = initialState, action: any) => {
   }
 };
 
-export default httpReducer;
+export { httpReducer };

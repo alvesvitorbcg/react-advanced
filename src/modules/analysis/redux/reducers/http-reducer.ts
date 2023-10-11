@@ -1,9 +1,9 @@
 // src/redux/reducers/httpReducer.ts
 
 import {
-  FETCH_DATA_REQUEST,
-  FETCH_DATA_SUCCESS,
-  FETCH_DATA_FAILURE,
+  FETCH_ALL_CALENDARS_REQUEST,
+  FETCH_ALL_CALENDARS_SUCCESS,
+  FETCH_ALL_CALENDARS_FAILURE,
 } from '../types';
 
 interface HttpState {
@@ -20,15 +20,15 @@ const initialState: HttpState = {
 
 const httpReducer = (state = initialState, action: any) => {
   switch (action.type) {
-    case FETCH_DATA_REQUEST:
+    case FETCH_ALL_CALENDARS_REQUEST:
       return { ...state, loading: true, error: null };
-    case FETCH_DATA_SUCCESS:
+    case FETCH_ALL_CALENDARS_SUCCESS:
       return { ...state, loading: false, data: action.payload };
-    case FETCH_DATA_FAILURE:
+    case FETCH_ALL_CALENDARS_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }
 };
 
-export default httpReducer;
+export { httpReducer };

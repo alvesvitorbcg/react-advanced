@@ -6,14 +6,33 @@ import {
   Select,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import DetailedTableData from '../../dummy_data/detailed_table_data.json';
 import Tabs from './components/tabs/Tabs';
 import IMergedDetailedTableWithProducts from './interfaces/IProductsMergedWithDetailedData';
 import * as Service from './service';
 import './View.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchData } from './redux/actions/http-actions';
 
 export default function View() {
+  const dispatch = useDispatch();
+  const {
+    data: products,
+    loading,
+    error,
+  } = useSelector((state: any) => state.analysis);
+
+  React.useEffect(() => {
+    dispatch(fetchData() as any);
+  }, [dispatch]);
+  React.useEffect(() => {
+    // if (products) {
+    //   Service.setProducts(products);
+    // }
+    console.log('Analysis View products', products);
+  }, [products]);
+
   const detailedTableEnrichedWithProducts =
     Service.getDetailedTableDataEnrichedWithProducts();
   const [filteredResults, setFilteredResults] = useState(
@@ -61,6 +80,14 @@ export default function View() {
     };
     setFilteredResults(filtered);
   };
+
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (error) {
+  //   return <div>There was an error</div>;
+  // }
   return (
     <div className="flex-column container" style={{ padding: '20px 50px' }}>
       <div
