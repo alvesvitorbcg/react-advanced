@@ -66,8 +66,6 @@ export default function CustomTabs({
   const [value, setValue] = React.useState(0);
   const campaigns = React.useMemo(() => {
     if (campaignsData) {
-      console.log('Campaigns data', campaignsData);
-
       return campaignsData.map((c, index) => ({
         ...c,
         color: colors[index],
