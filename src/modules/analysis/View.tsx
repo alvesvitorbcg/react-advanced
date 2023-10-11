@@ -14,54 +14,99 @@ import * as Service from './service';
 import './View.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData } from './redux/actions/http-actions';
+import { IProductsResponse } from './interfaces/IProduct';
 
 export default function View() {
   const dispatch = useDispatch();
-  const {
-    data: products,
-    loading,
-    error,
-  } = useSelector((state: any) => state.analysis);
+  const [categoryFilter, setCategoryFilter] = useState('');
+
+  const { data, loading, error } = useSelector((state: any) => state.analysis);
 
   React.useEffect(() => {
     dispatch(fetchData() as any);
   }, [dispatch]);
+
+  const products = React.useMemo(() => {
+    if (data) return data as IProductsResponse;
+  }, [data]);
   React.useEffect(() => {
-    // if (products) {
-    //   Service.setProducts(products);
-    // }
     console.log('Analysis View products', products);
   }, [products]);
+  const detailedTableEnrichedWithProducts = React.useMemo(() => {
+    if (products)
+      return Service.getDetailedTableDataEnrichedWithProducts(products);
+  }, [products]);
 
-  const detailedTableEnrichedWithProducts =
-    Service.getDetailedTableDataEnrichedWithProducts();
   const [filteredResults, setFilteredResults] = useState(
-    JSON.parse(
-      JSON.stringify(detailedTableEnrichedWithProducts)
-    ) as IMergedDetailedTableWithProducts
+    null as IMergedDetailedTableWithProducts | null
   );
+
+  React.useEffect(() => {
+    if (detailedTableEnrichedWithProducts) {
+      setFilteredResults(
+        JSON.parse(
+          JSON.stringify(detailedTableEnrichedWithProducts)
+        ) as IMergedDetailedTableWithProducts
+      );
+    }
+  }, [detailedTableEnrichedWithProducts]);
+
   const allRetailersIds = Service.queryAllRetailerIds();
   const retailersOptions = Service.removeDuplicates(allRetailersIds);
 
-  const categoriesIds = Service.queryAllCategoryIds();
-  const categoriesOptions = Service.removeDuplicates(categoriesIds);
+  // const retailersOptions = React.useMemo(() => {
+  //     const retailersIds = Service.queryAllRetailerIds();
+  //     return Service.removeDuplicates(retailersIds);
+  // }, [products]);
+  const categoriesOptions = React.useMemo(() => {
+    if (products) {
+      const categoriesIds = Service.queryAllCategoryIds(products);
+      return Service.removeDuplicates(categoriesIds);
+    }
+  }, [products]);
 
-  const brandsNames = Service.queryAllBrandNames(
-    detailedTableEnrichedWithProducts
-  );
-  const brandsOptions = Service.removeDuplicates(brandsNames);
+  const brandsOptions = React.useMemo(() => {
+    if (detailedTableEnrichedWithProducts) {
+      // debugger;
+      const brandsNames = Service.queryAllBrandNames(
+        detailedTableEnrichedWithProducts
+      );
+      return Service.removeDuplicates(brandsNames);
+    }
+  }, [detailedTableEnrichedWithProducts]);
 
-  const productsNames = Service.queryAllProductNames(
-    detailedTableEnrichedWithProducts
-  );
-  const productsOptions = Service.removeDuplicates(productsNames);
+  const productsOptions = React.useMemo(() => {
+    if (detailedTableEnrichedWithProducts) {
+      const productsNames = Service.queryAllProductNames(
+        detailedTableEnrichedWithProducts
+      );
+      const res = Service.removeDuplicates(productsNames);
+      return res;
+    }
+  }, [detailedTableEnrichedWithProducts]);
 
-  const [categoryFilter, setCategoryFilter] = useState(categoriesOptions[0]);
   const [retailerFilter, setRetailerFilter] = useState(retailersOptions[0]);
-  const [brandFilter, setBrandFilter] = useState(brandsOptions[0]);
-  const [productFilter, setProductFilter] = useState(productsOptions[0]);
+  const [brandFilter, setBrandFilter] = useState('');
+  const [productFilter, setProductFilter] = useState('');
+
+  React.useEffect(() => {
+    if (categoriesOptions) {
+      setCategoryFilter(categoriesOptions[0]);
+    }
+  }, [categoriesOptions]);
+  React.useEffect(() => {
+    if (brandsOptions) {
+      setBrandFilter(brandsOptions[0]);
+    }
+  }, [brandsOptions]);
+  React.useEffect(() => {
+    if (productsOptions) {
+      setProductFilter(productsOptions[0]);
+    }
+  }, [productsOptions]);
 
   const handleApplyFilter = () => {
+    if (!detailedTableEnrichedWithProducts) return;
     const filtered = {
       ...detailedTableEnrichedWithProducts,
       promo_events: detailedTableEnrichedWithProducts.promo_events.filter(
@@ -148,11 +193,12 @@ export default function View() {
             placeholder="Category"
             label="Category"
           >
-            {categoriesOptions.map((option, index) => (
-              <MenuItem key={index} value={option}>
-                {option}
-              </MenuItem>
-            ))}
+            {categoriesOptions &&
+              categoriesOptions.map((option, index) => (
+                <MenuItem key={index} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
 
@@ -168,11 +214,12 @@ export default function View() {
             }}
             variant="outlined"
           >
-            {brandsOptions.map((option, index) => (
-              <MenuItem key={index} value={option}>
-                {option}
-              </MenuItem>
-            ))}
+            {brandsOptions &&
+              brandsOptions.map((option, index) => (
+                <MenuItem key={index} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
 
@@ -188,11 +235,12 @@ export default function View() {
             }}
             variant="outlined"
           >
-            {productsOptions.map((option, index) => (
-              <MenuItem key={index} value={option}>
-                {option}
-              </MenuItem>
-            ))}
+            {productsOptions &&
+              productsOptions.map((option, index) => (
+                <MenuItem key={index} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
 
@@ -203,18 +251,20 @@ export default function View() {
         >
           <Typography color="white">APPLY FILTERS</Typography>
         </Button>
-        <Button
-          variant="contained"
-          sx={{ width: '200px', backgroundColor: '#e0e0e0' }}
-          onClick={() => {
-            setFilteredResults(detailedTableEnrichedWithProducts);
-          }}
-        >
-          <Typography>CLEAR FILTERS</Typography>
-        </Button>
+        {detailedTableEnrichedWithProducts && (
+          <Button
+            variant="contained"
+            sx={{ width: '200px', backgroundColor: '#e0e0e0' }}
+            onClick={() => {
+              setFilteredResults(detailedTableEnrichedWithProducts);
+            }}
+          >
+            <Typography>CLEAR FILTERS</Typography>
+          </Button>
+        )}
       </div>
       <div className="container-section">
-        <Tabs detailedTableData={filteredResults}></Tabs>
+        {filteredResults && <Tabs detailedTableData={filteredResults}></Tabs>}
       </div>
     </div>
   );

@@ -1,8 +1,10 @@
 import DetailedTableData from '../../dummy_data/detailed_table_data.json';
-import ProductsData from '../../dummy_data/products.json';
+import { IProductsResponse } from './interfaces/IProduct';
 import IMergedDetailedTableWithProducts from './interfaces/IProductsMergedWithDetailedData';
 
-export function getDetailedTableDataEnrichedWithProducts(): IMergedDetailedTableWithProducts {
+export function getDetailedTableDataEnrichedWithProducts(
+  ProductsData: IProductsResponse
+): IMergedDetailedTableWithProducts {
   return {
     ...DetailedTableData,
     product_kpis: DetailedTableData.product_kpis.map((productKpi) => {
@@ -23,7 +25,7 @@ export function queryAllBrandNames(data: IMergedDetailedTableWithProducts) {
   return data.product_kpis.map((kpi) => kpi.product?.product_brand);
 }
 
-export function queryAllCategoryIds() {
+export function queryAllCategoryIds(ProductsData: IProductsResponse) {
   return ProductsData.products.map((x) => x.category_name);
 }
 

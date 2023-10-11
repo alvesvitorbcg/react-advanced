@@ -1,5 +1,6 @@
 // src/redux/reducers/httpReducer.ts
 
+import { IProductsResponse } from '../../interfaces/IProduct';
 import {
   FETCH_ALL_CALENDARS_REQUEST,
   FETCH_ALL_CALENDARS_SUCCESS,
@@ -7,7 +8,7 @@ import {
 } from '../types';
 
 interface HttpState {
-  data: any;
+  data: IProductsResponse | null;
   loading: boolean;
   error: string | null;
 }

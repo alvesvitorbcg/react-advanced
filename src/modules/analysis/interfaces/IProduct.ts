@@ -6,3 +6,7 @@ export default interface IProduct {
   size_units: string;
   product_brand: string;
 }
+
+export interface IProductsResponse {
+  products: IProduct[];
+}
