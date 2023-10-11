@@ -41,7 +41,7 @@ export default function BasicModal({
   const [nameValue, setNameValue] = useState('');
 
   const addNew = () => {
-    console.log('add new');
+    alert('Feature not implemented');
   };
 
   return (

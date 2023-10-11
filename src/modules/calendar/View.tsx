@@ -3,24 +3,8 @@ import { Button, Typography } from '@mui/material';
 import * as React from 'react';
 import AddCalendarModal from './components/add-calendar-modal/AddCalendarModal';
 import BasicTable from './components/calendars-table/CalendarsTable';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchData } from './redux/actions/http-actions';
 import ICalendar from './interfaces/ICalendar';
-
-const useCalendarData = () => {
-  const dispatch = useDispatch();
-  const { data } = useSelector((state: any) => state.calendar);
-
-  React.useEffect(() => {
-    dispatch(fetchData() as any);
-  }, [dispatch]);
-
-  const calendars = React.useMemo(() => {
-    if (data) return data as ICalendar[];
-  }, [data]);
-
-  return calendars;
-};
+import { useCalendarData } from './hooks/useCalendarData';
 
 export default function View() {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -28,7 +12,6 @@ export default function View() {
   const data = useCalendarData();
 
   React.useEffect(() => {
-    console.log('Calendar view calendars', data);
     if (data) {
       setCalendars(data);
     }
