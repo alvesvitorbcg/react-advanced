@@ -13,7 +13,7 @@ import IMergedDetailedTableWithProducts from './interfaces/IProductsMergedWithDe
 import * as Service from './service';
 import './View.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchData } from './redux/actions/http-actions';
+import { fetchProductsData } from './redux/actions/http-actions';
 import { IProductsResponse } from './interfaces/IProduct';
 
 export default function View() {
@@ -23,7 +23,7 @@ export default function View() {
   const { data, loading, error } = useSelector((state: any) => state.analysis);
 
   React.useEffect(() => {
-    dispatch(fetchData() as any);
+    dispatch(fetchProductsData() as any);
   }, [dispatch]);
 
   const products = React.useMemo(() => {

@@ -9,6 +9,9 @@ import EffectivenessTable from '../../components/effectiveness-table/Effectivene
 import IMergedDetailedTableWithProducts from '../../interfaces/IProductsMergedWithDetailedData';
 import DetailedDataTable from '../detailed-data-table/DetailedDataTable';
 import EffectivenessGraph from '../effectiveness-table/effectiveness-graph/EffectivenessGraph';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCampaignMatrixData } from '../../redux/actions/http-actions';
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -43,6 +46,16 @@ export default function CustomTabs({
 }: {
   detailedTableData: IMergedDetailedTableWithProducts;
 }) {
+  const dispatch = useDispatch();
+  const { data, loading, error } = useSelector((state: any) => state.analysis);
+  React.useEffect(() => {
+    dispatch(fetchCampaignMatrixData() as any);
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    if (data) console.log('Campaigns data', data);
+  }, [data]);
+
   const colors = ['#c31653', '#d7df3c', '#7ca893', '#54775c'];
   const [value, setValue] = React.useState(0);
   const campaigns = CampaignsData.map((c, index) => ({
