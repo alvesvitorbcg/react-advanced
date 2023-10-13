@@ -13,12 +13,24 @@ $primary-green: #3ead92;
   display: flex;
   flex-direction: row;
 }
+.flex-row-center {
+  @extend .flex-row;
+  justify-content: center;
+}
+.flex-row-middle {
+  @extend .flex-row;
+  align-items: center;
+}
 
 .flex-column {
   display: flex;
   flex-direction: column;
 }
-
+.flex-column-end {
+  @extend .flex-column;
+  justify-content: flex-end;
+  align-items: center;
+}
 .flex-row-space-between {
   @extend .flex-row;
   justify-content: space-between;

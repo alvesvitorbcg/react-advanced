@@ -6,7 +6,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import * as React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import ModulesRoutes from '../ModulesRoutes';
-
+import './LeftNavigator.scss';
 export default function LeftDrawer({
   toggled,
   setToggled,
@@ -37,7 +37,7 @@ export default function LeftDrawer({
                 sx={{ justifyContent: 'center' }}
               >
                 <NavLink to={menuItem.url}>
-                  <Icon style={{ width: 40, height: 40 }}></Icon>
+                  <Icon className="menu-icon"></Icon>
                 </NavLink>
               </ListItemButton>
             </ListItem>

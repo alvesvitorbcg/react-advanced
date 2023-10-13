@@ -1,5 +1,6 @@
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import ICampaignData from '../../../interfaces/ICampaignData';
+import './EffectivenessGraph.scss';
 
 const transformIntoNumber = (value: string) =>
   Number(value.replace(/(k|K)/g, '000'));
@@ -19,7 +20,7 @@ export default function EffectivenessGraph({
 
   return (
     <>
-      <div style={{ height: 400, marginTop: 50 }}>
+      <div className="graph-container">
         <ResponsiveContainer>
           <BarChart
             data={data}

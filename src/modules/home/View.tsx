@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import ModulesRoutes from '../core/components/ModulesRoutes';
 import { ReactComponent as PaperIcon } from './../../shared/icons/paper.svg';
 import { ReactComponent as SpeedometerIcon } from './../../shared/icons/speedometer.svg';
+import './View.scss';
 
 export function ActionAreaCard({
   margin,
@@ -79,15 +80,7 @@ export default function View() {
       );
     });
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        direction: 'ltr',
-        alignItems: 'center',
-        minHeight: '100vh',
-      }}
-    >
+    <div className="flex-row-center flex-row-middle home-page-container">
       {renderCards()}
     </div>
   );

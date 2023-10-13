@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import ICampaignData from '../../interfaces/ICampaignData';
+import { ColouredSquare } from './coloured-square/ColouredSquare';
 
 export default function EffectivenessTable({
   sx,
@@ -40,14 +41,7 @@ export default function EffectivenessTable({
                   flexDirection: 'row',
                 }}
               >
-                <div
-                  style={{
-                    height: 20,
-                    width: 20,
-                    backgroundColor: row.color,
-                    marginRight: '8px',
-                  }}
-                ></div>
+                <ColouredSquare color={row.color}></ColouredSquare>
                 {row.classification_name}
               </TableCell>
               <TableCell align="center">{row.number_of_offers}</TableCell>

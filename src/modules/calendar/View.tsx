@@ -5,6 +5,7 @@ import AddCalendarModal from './components/add-calendar-modal/AddCalendarModal';
 import BasicTable from './components/calendars-table/CalendarsTable';
 import ICalendar from './interfaces/ICalendar';
 import { useCalendarData } from './hooks/useCalendarData';
+import './View.scss';
 
 export default function View() {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -18,7 +19,7 @@ export default function View() {
   }, [data]);
 
   return (
-    <div style={{ padding: '20px 200px' }}>
+    <div className="container-padding">
       <div className="flex-row-space-between">
         <Typography color="primary" variant="h6" component="div" align="left">
           All Calendars

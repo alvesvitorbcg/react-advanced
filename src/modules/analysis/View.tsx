@@ -51,26 +51,14 @@ export default function View() {
   };
 
   return (
-    <div className="flex-column container" style={{ padding: '20px 50px' }}>
-      <div
-        className="container-section"
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-        }}
-      >
+    <div className="flex-column container row-padding">
+      <div className="container-section flex-column-end">
         <CalendarSelect
           calendarFilter={calendarFilter}
           setCalendarFilter={setCalendarFilter}
         ></CalendarSelect>
       </div>
-      <div
-        className="container-section"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
+      <div className="container-section flex-row-space-between">
         <RetailerSelect
           retailerFilter={retailerFilter}
           setRetailerFilter={setRetailerFilter}
