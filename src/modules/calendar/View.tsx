@@ -1,11 +1,23 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import * as React from 'react';
 import AddCalendarModal from './components/add-calendar-modal/AddCalendarModal';
 import BasicTable from './components/calendars-table/CalendarsTable';
 import ICalendar from './interfaces/ICalendar';
 import { useCalendarData } from './hooks/useCalendarData';
 import './View.scss';
+import { CustomButton } from '../core/components/CustomButton';
+
+function CustomAddIcon() {
+  return (
+    <AddIcon
+      sx={{
+        marginRight: 1,
+        color: 'white',
+      }}
+    ></AddIcon>
+  );
+}
 
 export default function View() {
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -24,17 +36,11 @@ export default function View() {
         <Typography color="primary" variant="h6" component="div" align="left">
           All Calendars
         </Typography>
-        <Button variant="contained" onClick={() => setModalOpen(true)}>
-          <div className="flex-row">
-            <AddIcon
-              sx={{
-                marginRight: 1,
-                color: 'white',
-              }}
-            ></AddIcon>
-            <Typography color="white">New Calendar</Typography>
-          </div>
-        </Button>
+        <CustomButton
+          onClick={() => setModalOpen(true)}
+          Icon={<CustomAddIcon />}
+          text="New Calendar"
+        ></CustomButton>
       </div>
       <BasicTable
         calendars={calendars}

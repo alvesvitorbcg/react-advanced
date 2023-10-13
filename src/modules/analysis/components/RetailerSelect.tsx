@@ -28,7 +28,7 @@ export function RetailerSelect({
   return (
     <FormControl
       sx={{
-        width: '200px',
+        padding: '0px 10px',
       }}
     >
       <InputLabel id="demo-simple-select-label">Retailer</InputLabel>

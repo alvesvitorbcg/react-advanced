@@ -1,5 +1,6 @@
-import { Button, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import { CustomButton } from '../core/components/CustomButton';
+import { CalendarSelect } from './CalendarSelect';
 import './View.scss';
 import { BrandSelect } from './components/BrandSelect';
 import { CategorySelect } from './components/CategorySelect';
@@ -8,7 +9,6 @@ import { RetailerSelect } from './components/RetailerSelect';
 import Tabs from './components/tabs/Tabs';
 import { useDetailedTableEnrichedWithProductData } from './hooks/useDetailedTableEnrichedWithProductData';
 import IMergedDetailedTableWithProducts from './interfaces/IProductsMergedWithDetailedData';
-import { CalendarSelect } from './CalendarSelect';
 
 export default function View() {
   const [categoryFilter, setCategoryFilter] = useState(null as null | string);
@@ -59,44 +59,50 @@ export default function View() {
         ></CalendarSelect>
       </div>
       <div className="container-section flex-row-space-between">
-        <RetailerSelect
-          retailerFilter={retailerFilter}
-          setRetailerFilter={setRetailerFilter}
-        ></RetailerSelect>
-
-        <CategorySelect
-          categoryFilter={categoryFilter}
-          setCategoryFilter={setCategoryFilter}
-        ></CategorySelect>
-
-        <BrandSelect
-          brandFilter={brandFilter}
-          setBrandFilter={setBrandFilter}
-        ></BrandSelect>
-
-        <ProductSelect
-          productFilter={productFilter}
-          setProductFilter={setProductFilter}
-        ></ProductSelect>
-
-        <Button
-          variant="contained"
-          sx={{ width: '200px' }}
-          onClick={handleApplyFilter}
-        >
-          <Typography color="white">APPLY FILTERS</Typography>
-        </Button>
-        {detailedTableEnrichedWithProducts && (
-          <Button
-            variant="contained"
-            sx={{ width: '200px', backgroundColor: '#e0e0e0' }}
-            onClick={() => {
-              setFilteredResults(detailedTableEnrichedWithProducts);
-            }}
-          >
-            <Typography>CLEAR FILTERS</Typography>
-          </Button>
-        )}
+        <div className="flex-row">
+          <div className="mr-4">
+            <RetailerSelect
+              retailerFilter={retailerFilter}
+              setRetailerFilter={setRetailerFilter}
+            ></RetailerSelect>
+          </div>
+          <div className="mr-4">
+            <CategorySelect
+              categoryFilter={categoryFilter}
+              setCategoryFilter={setCategoryFilter}
+            ></CategorySelect>
+          </div>
+          <div className="mr-4">
+            <BrandSelect
+              brandFilter={brandFilter}
+              setBrandFilter={setBrandFilter}
+            ></BrandSelect>
+          </div>
+          <div className="mr-4">
+            <ProductSelect
+              productFilter={productFilter}
+              setProductFilter={setProductFilter}
+            ></ProductSelect>
+          </div>
+        </div>
+        <div className="flex-row">
+          <div className="flex-row-space-between">
+            <div className="mr-4">
+              <CustomButton
+                text="Apply Filters"
+                onClick={handleApplyFilter}
+              ></CustomButton>
+            </div>
+            {detailedTableEnrichedWithProducts && (
+              <CustomButton
+                text="Clear Filters"
+                onClick={() =>
+                  setFilteredResults(detailedTableEnrichedWithProducts)
+                }
+              ></CustomButton>
+            )}
+          </div>
+        </div>
       </div>
       <div className="container-section">
         {filteredResults && <Tabs detailedTableData={filteredResults}></Tabs>}

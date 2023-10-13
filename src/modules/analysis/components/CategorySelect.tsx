@@ -26,11 +26,7 @@ export function CategorySelect({
 
   return (
     categoryFilter && (
-      <FormControl
-        sx={{
-          width: '200px',
-        }}
-      >
+      <FormControl>
         <InputLabel id="demo-simple-select-label">Category</InputLabel>
         <Select
           labelId="demo-simple-select-label"

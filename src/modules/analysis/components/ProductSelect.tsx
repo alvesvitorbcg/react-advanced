@@ -31,11 +31,7 @@ export function ProductSelect({
 
   return (
     productFilter && (
-      <FormControl
-        sx={{
-          width: '200px',
-        }}
-      >
+      <FormControl>
         <InputLabel id="demo-simple-select-label">Product</InputLabel>
         <Select
           labelId="demo-simple-select-label"
