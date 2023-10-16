@@ -2,6 +2,34 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Setting up local backend
+
+- On the terminal, navigate to `caselet_files/Backend/` directory
+
+- Create virtual environment
+
+  ```sh
+  python -m venv venv
+  ```
+
+- Activate virtual environment with
+
+  ```sh
+  source venv/bin/activate
+  ```
+
+- Run Script for installing dependencies
+
+  ```sh
+  pip install -r requirements.txt
+  ```
+
+- Run the backend application with
+
+  ```sh
+  python app.py
+  ```
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -45,15 +73,26 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-## Docker
+## Running Sonarqube analysis locally
 
-- Build
+- Run Sonarqube server in Docker
 
   ```sh
-      docker build -t inventory_management .
+  docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube
   ```
 
-- Run:
+- Access Sonarqube in `http://localhost:9000/` and login with default user `admin` with password `admin`
+
+- Create project with name and key `promotions-management-frontend`
+
+- In `run_analysis.sh` Replace `-Dsonar.login` value with a new token generated in your local Sonarqube.
+
+- Install [Sonarqube Scanner](https://docs.sonarqube.org/latest/analyzing-source-code/scanners/sonarscanner/).
+
+- Run command below to run tests and generate Sonarqube analysis
+
   ```sh
-      docker run  -p 3000:3000 --rm -v $PWD:/code inventory_management
+  bash run_analysis.sh $PATH_TO_SONARSCANNER_BINARIES
   ```
+
+  `$PATH_TO_SONARSCANNER_BINARIES` usually looks like /Users/{USER}/Downloads/sonar-scanner-{VERSION}-{OS}/bin
