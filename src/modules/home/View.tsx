@@ -69,10 +69,10 @@ export default function View() {
   };
 
   const renderCards = () =>
-    cards.map((card, key) => {
+    cards.map((card) => {
       return (
         <ActionAreaCard
-          key={key}
+          key={card.title}
           margin="5px 20px"
           description={card.description}
           title={card.title}

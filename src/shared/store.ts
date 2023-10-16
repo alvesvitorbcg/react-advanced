@@ -1,6 +1,10 @@
 // src/redux/store.ts
 
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import {
+  legacy_createStore as createStore,
+  applyMiddleware,
+  combineReducers,
+} from 'redux';
 import thunk from 'redux-thunk';
 import { httpReducer as analysisReducer } from '../modules/analysis/redux/reducers/http-reducer';
 import { httpReducer as calendarReducer } from '../modules/calendar/redux/reducers/http-reducer';
