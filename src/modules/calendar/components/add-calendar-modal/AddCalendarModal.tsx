@@ -15,11 +15,10 @@ import Modal from '@mui/material/Modal';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useState } from 'react';
 import './AddCalendarModal.scss';
 
 const style = {
-  position: 'absolute' as 'absolute',
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -38,8 +37,6 @@ export default function BasicModal({
   handleClose: Function;
   onOptimizeClick: Function;
 }) {
-  const [nameValue, setNameValue] = useState('');
-
   const addNew = () => {
     alert('Feature not implemented');
   };
@@ -61,7 +58,6 @@ export default function BasicModal({
               sx={{
                 width: '300px;',
               }}
-              onChange={(event) => setNameValue(event.target.value)}
             />
           </div>
           <div className="modal-row flex-row-space-between">

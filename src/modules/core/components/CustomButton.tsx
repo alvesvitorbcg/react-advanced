@@ -12,7 +12,7 @@ export function CustomButton({
   return (
     <Button variant="contained" onClick={() => onClick()}>
       <div className="flex-row flex-row-middle">
-        {Icon && Icon}
+        {Icon}
         <Typography fontSize={14} color="white">
           {text}
         </Typography>

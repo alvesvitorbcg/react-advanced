@@ -31,7 +31,7 @@ export default function LeftDrawer({
           const Icon = menuItem.icons[iconIndex];
 
           return (
-            <ListItem key={index} disablePadding>
+            <ListItem key={menuItem.label} disablePadding>
               <ListItemButton
                 alignItems="center"
                 sx={{ justifyContent: 'center' }}

@@ -33,18 +33,17 @@ export function CategorySelect({
           id="demo-simple-select"
           value={categoryFilter}
           onChange={(event) => {
-            setCategoryFilter(event.target.value as any);
+            setCategoryFilter(event.target.value);
           }}
           variant="outlined"
           placeholder="Category"
           label="Category"
         >
-          {categoriesOptions &&
-            categoriesOptions.map((option, index) => (
-              <MenuItem key={index} value={option}>
-                {option}
-              </MenuItem>
-            ))}
+          {categoriesOptions?.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     )

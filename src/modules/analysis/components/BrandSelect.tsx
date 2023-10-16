@@ -42,12 +42,11 @@ export function BrandSelect({
           }}
           variant="outlined"
         >
-          {brandsOptions &&
-            brandsOptions.map((option, index) => (
-              <MenuItem key={index} value={option}>
-                {option}
-              </MenuItem>
-            ))}
+          {brandsOptions?.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     )

@@ -28,9 +28,9 @@ export default function EffectivenessTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {campaigns.map((row, index) => (
+          {campaigns.map((row) => (
             <TableRow
-              key={index}
+              key={row.classification_name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell

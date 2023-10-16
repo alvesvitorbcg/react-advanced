@@ -42,12 +42,11 @@ export function RetailerSelect({
         }}
         variant="outlined"
       >
-        {retailersOptions &&
-          retailersOptions.map((option, index) => (
-            <MenuItem key={index} value={option}>
-              {option}
-            </MenuItem>
-          ))}
+        {retailersOptions?.map((option) => (
+          <MenuItem key={option} value={option}>
+            {option}
+          </MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

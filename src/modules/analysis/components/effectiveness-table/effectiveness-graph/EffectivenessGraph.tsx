@@ -3,7 +3,7 @@ import ICampaignData from '../../../interfaces/ICampaignData';
 import './EffectivenessGraph.scss';
 
 const transformIntoNumber = (value: string) =>
-  Number(value.replace(/(k|K)/g, '000'));
+  Number(value.replace(/[kK]/g, '000'));
 
 export default function EffectivenessGraph({
   campaigns,
